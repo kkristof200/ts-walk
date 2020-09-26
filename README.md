@@ -43,6 +43,16 @@ console.log(Walk.files('./', { absolutePaths: false }))
 console.log(Walk.files('./', { recursive: true, absolutePaths: false }))
 // all .js and .ts files from current folder (recursive) with relative path
 console.log(Walk.files('./', { recursive: true, absolutePaths: false, fileFilter: { allowedExtensions: ['js', 'ts'] }}))
+// all .ts files (smaller, than 2000 bytes) from current folder with absolute path
+console.log(Walk.files('./src', {
+    fileFilter: {
+        allowedExtensions: ['ts'],
+        sizeBytes: { min: 0, max: 2000 }
+        // lastAccessedMs: null,
+        // lastModifiedMs: null,
+        // createdMs: null
+    }
+}))
 
 // all dirs from current folder with full path (absolute_path)
 console.log(Walk.dirs('./'))
