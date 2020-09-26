@@ -1,31 +1,37 @@
 # ts-walk
+Extract all file or directory/folder paths from a specified directory that justify a set of rules (file extension, etc)
 
-extract all file or directory/folder paths from a specified directory that justify a set of rules (file extension, etc)
+## Install
+```bash
+npm i ts-walk
+```
 
 ## Walk options
 
 Folder/Directory walk options:
-
-
-| option-name | description | Default value |
-| - | - | - |
-| recursive | walk subfolders or no | false |
-| absolutePaths | return absolute or relative paths | true (absolute paths) |
+| option-name | description | type | Default value |
+| - | - | - | - |
+| recursive | walk subfolders or no | boolean | false |
+| absolutePaths | return absolute or relative paths | boolean | true (absolute paths) |
 
 File walk options:
+| option-name | description | type | Default value |
+| - | - | - | - |
+| recursive | walk subfolders or no | boolean | false |
+| absolutePaths | return absolute or relative paths | boolean | true (absolute paths) |
+| fileFilter | filter the returned results | FileFilter | null (no filter) |
+
+FileFilter options:
+| option-name | description | type | Default value |
+| - | - | - | - |
+| allowedExtensions | the allowed extensions of the retrieved files | string[] | null (no filter) |
+| sizeBytes | min and max last size (in bytes) of the returned results | FilterMinMax | null (no filter) |
+| lastAccessedMs | min and max last access time time of the returned results | FilterMinMax | null (no filter) |
+| lastModifiedMs | min and max last modification time time of the returned results | FilterMinMax | null (no filter) |
+| createdMs | min and max creation time of the returned results | FilterMinMax | null (no filter) |
 
 
-| option-name | description | Default value |
-| - | - | - |
-| recursive | walk subfolders or no | false |
-| absolutePaths | return absolute or relative paths | true (absolute paths) |
-
-
-
-## Usagebash
-
-npm i ts-walk
-
+## Usage
 ```typescript
 import { Walk } from 'ts-walk'
 
