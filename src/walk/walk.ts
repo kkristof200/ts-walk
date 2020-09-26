@@ -18,7 +18,7 @@ export class Walk {
     static files(
         root: string,
         options?: {
-            fileFilter: FileFilter,
+            fileFilter?: FileFilter,
             recursive?: boolean,
             absolutePaths?: boolean
         }
