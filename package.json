@@ -20,6 +20,6 @@
     },
     "author": "Kristóf-Attila Kovács",
     "name": "ts-walk",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "extract files from a dir"
 }

@@ -5,7 +5,7 @@ import { readdirSync } from 'fs'
 
 export class Walk {
     static dirs(
-        root: string,
+        root: string = '/',
         options?: {
             recursive?: boolean,
             absolutePaths?: boolean
@@ -15,7 +15,7 @@ export class Walk {
     }
     
     static files(
-        root: string,
+        root: string = '/',
         options?: {
             allowedExtensions?: string[],
             recursive?: boolean,
@@ -26,7 +26,7 @@ export class Walk {
     }
     
     static walk(
-        root: string,
+        root: string = '/',
         options?: WalkOptions
     ): string[] {
         options = solveOptions(options)
