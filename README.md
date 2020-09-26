@@ -8,20 +8,20 @@ npm i ts-walk
 
 ## Walk options
 
-Folder/Directory walk options:
+#### Folder/Directory walk options:
 | option-name | description | type | Default value |
 | - | - | - | - |
 | recursive | walk subfolders or no | boolean | false |
 | absolutePaths | return absolute or relative paths | boolean | true (absolute paths) |
 
-File walk options:
+#### File walk options:
 | option-name | description | type | Default value |
 | - | - | - | - |
 | recursive | walk subfolders or no | boolean | false |
 | absolutePaths | return absolute or relative paths | boolean | true (absolute paths) |
 | fileFilter | filter the returned results | FileFilter | null (no filter) |
 
-FileFilter options:
+#### FileFilter options:
 | option-name | description | type | Default value |
 | - | - | - | - |
 | allowedExtensions | the allowed extensions of the retrieved files | string[] | null (no filter) |
