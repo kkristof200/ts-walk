@@ -1,6 +1,8 @@
-export class FilterMinMax {
-    readonly min: number
-    readonly max: number
+export type FilterMinMax = {
+    min: number
+    max: number
+}
 
-    isBetween(val: number): boolean { return val >= this.min && val <= this.max }
+export function evaluateMinMax(val: number, filter: FilterMinMax) {
+    return filter ? val >= filter.min && val <= filter.max : true
 }
