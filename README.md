@@ -1,7 +1,9 @@
 # ts-walk
+
 Extract all file or directory/folder paths from a specified directory that justify a set of rules (file extension, etc)
 
 ## Install
+
 ```bash
 npm i ts-walk
 ```
@@ -9,12 +11,16 @@ npm i ts-walk
 ## Walk options
 
 #### Folder/Directory walk options:
+
+
 | option name | description | type | default value |
 | - | - | - | - |
 | recursive | walk subfolders or no | boolean | false |
 | absolutePaths | return absolute or relative paths | boolean | true (absolute paths) |
 
 #### File walk options:
+
+
 | option name | description | type | default value |
 | - | - | - | - |
 | recursive | walk subfolders or no | boolean | false |
@@ -22,6 +28,8 @@ npm i ts-walk
 | fileFilter | filter the returned results | FileFilter | null (no filter) |
 
 #### FileFilter options:
+
+
 | option name | description | type | default value |
 | - | - | - | - |
 | allowedExtensions | the allowed extensions of the retrieved files | string[] | null (no filter) |
@@ -30,8 +38,8 @@ npm i ts-walk
 | lastModifiedMs | min and max last modification time time of the returned results | FilterMinMax | null (no filter) |
 | createdMs | min and max creation time of the returned results | FilterMinMax | null (no filter) |
 
-
 ## Usage
+
 ```typescript
 import { Walk } from 'ts-walk'
 
@@ -47,7 +55,7 @@ console.log(Walk.files('./', { recursive: true, absolutePaths: false, fileFilter
 console.log(Walk.files('./src', {
     fileFilter: {
         allowedExtensions: ['ts'],
-        sizeBytes: { min: 0, max: 2000 }
+        sizeBytes: { max: 2000 }
         // lastAccessedMs: null,
         // lastModifiedMs: null,
         // createdMs: null
