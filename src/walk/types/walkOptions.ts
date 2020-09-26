@@ -1,10 +1,17 @@
+import { FilterMinMax } from './filterMinMax';
 import { PathType } from "./pathType";
 
 export type WalkOptions = {
     type?: PathType
-    allowedExtensions?: string[]
     recursive?: boolean
     absolutePaths?: boolean
+    fileFilter?: {
+        allowedExtensions?: string[],
+        sizeBytes?: FilterMinMax,
+        lastAccessedMs?: FilterMinMax,
+        lastModifiedMs?: FilterMinMax,
+        createdMs?: FilterMinMax,
+    }
 }
 
 export function solveOptions(options?: WalkOptions, type = PathType.Both): WalkOptions {
@@ -13,7 +20,13 @@ export function solveOptions(options?: WalkOptions, type = PathType.Both): WalkO
     if (!options) {
         return {
             type: type,
-            allowedExtensions: [],
+            fileFilter: {
+                allowedExtensions: null,
+                sizeBytes: null,
+                lastAccessedMs: null,
+                lastModifiedMs: null,
+                createdMs: null
+            },
             recursive: false,
             absolutePaths: true
         }
@@ -21,7 +34,13 @@ export function solveOptions(options?: WalkOptions, type = PathType.Both): WalkO
 
     return {
         type: (options.type != null) ? options.type : type,
-        allowedExtensions: options.allowedExtensions ?? [],
+        fileFilter: options.fileFilter ?? {
+            allowedExtensions: null,
+            sizeBytes: null,
+            lastAccessedMs: null,
+            lastModifiedMs: null,
+            createdMs: null
+        },
         recursive: (options.recursive != null) ? options.recursive : false,
         absolutePaths: (options.absolutePaths != null) ? options.absolutePaths : true
     }

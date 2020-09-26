@@ -1,11 +1,11 @@
 import { WalkOptions, solveOptions } from './types/walkOptions';
 import { PathType } from './types/pathType';
 import { join, resolve, isAbsolute } from 'path'
-import { readdirSync } from 'fs'
+import { readdirSync, statSync } from 'fs'
 
 export class Walk {
     static dirs(
-        root: string = '/',
+        root: string,
         options?: {
             recursive?: boolean,
             absolutePaths?: boolean
@@ -15,9 +15,15 @@ export class Walk {
     }
     
     static files(
-        root: string = '/',
+        root: string,
         options?: {
-            allowedExtensions?: string[],
+            fileFilter: {
+                allowedExtensions: null,
+                size: null,
+                lastAccessedMs: null,
+                lastModifiedMs: null,
+                createdMs: null
+            },
             recursive?: boolean,
             absolutePaths?: boolean
         }
@@ -26,23 +32,23 @@ export class Walk {
     }
     
     static walk(
-        root: string = '/',
+        root: string,
         options?: WalkOptions
     ): string[] {
         options = solveOptions(options)
     
         if (options.absolutePaths && !isAbsolute(root)) root = resolve(root)
     
-        if (options.allowedExtensions) {
-            if (options.allowedExtensions.length > 0) {
+        if (options.fileFilter.allowedExtensions) {
+            if (options.fileFilter.allowedExtensions.length > 0) {
                 var _allowedExtensions: string[] = []
     
-                for (var ext of options.allowedExtensions) {
+                for (var ext of options.fileFilter.allowedExtensions) {
                     _allowedExtensions.push(ext.startsWith('.') || ext.length == 0 ? ext : '.' + ext)
                 }
     
-                options.allowedExtensions = _allowedExtensions
-            } else { options.allowedExtensions = null }
+                options.fileFilter.allowedExtensions = _allowedExtensions
+            } else { options.fileFilter.allowedExtensions = null }
         }
     
         var paths: string[] = []
@@ -55,8 +61,8 @@ export class Walk {
                 if (options.type != PathType.Directory) {
                     var shouldAdd = false
     
-                    if (options.allowedExtensions) {
-                        for (const ext of options.allowedExtensions) {    
+                    if (options.fileFilter.allowedExtensions) {
+                        for (const ext of options.fileFilter.allowedExtensions) {    
                             if (name.endsWith(ext)) {
                                 shouldAdd = true
     
@@ -64,6 +70,32 @@ export class Walk {
                             }
                         }
                     } else { shouldAdd = true }
+
+                    if (shouldAdd
+                        && (
+                            options.fileFilter.sizeBytes
+                            ||
+                            options.fileFilter.lastAccessedMs
+                            ||
+                            options.fileFilter.lastModifiedMs
+                            ||
+                            options.fileFilter.createdMs
+                        )
+                    ) {
+                        const stats = statSync(path)
+
+                        if (
+                            (options.fileFilter.sizeBytes && !options.fileFilter.sizeBytes.isBetween(stats.size))
+                            ||
+                            (options.fileFilter.lastAccessedMs && !options.fileFilter.sizeBytes.isBetween(stats.atimeMs))
+                            ||
+                            (options.fileFilter.lastModifiedMs && !options.fileFilter.sizeBytes.isBetween(stats.mtimeMs))
+                            ||
+                            (options.fileFilter.createdMs && !options.fileFilter.sizeBytes.isBetween(stats.birthtimeMs))
+                        ) {
+                            shouldAdd = false
+                        }
+                    }
     
                     if (shouldAdd) paths.push(path)
                 }
